@@ -1,6 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:mariadb://localhost:3306
-    username: root
-    password: root
-
+  output:
+    ansi:
+      enabled: always
+  sql:
+    init:
+      schema-locations: 'classpath:/org/springframework/batch/core/schema-h2.sql'
