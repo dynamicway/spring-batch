@@ -16,7 +16,7 @@ class SimpleConfig(
     private val platformTransactionManager: AbstractPlatformTransactionManager,
 ) {
     @Bean
-    fun simpleTaskletJob() = JobBuilder("simpleJob", jobRepository)
+    fun simpleTaskletJob() = JobBuilder("simpleTaskletJob", jobRepository)
         .start(simpleTaskletStep())
         .build()
 
