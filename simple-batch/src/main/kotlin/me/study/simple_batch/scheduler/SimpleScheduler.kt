@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component
 
 @Component
 class SimpleScheduler(
-    private val simpleJob: Job,
+    private val simpleTaskletJob: Job,
     private val jobLauncher: JobLauncher
 ) {
     @Scheduled(fixedDelay = 5 * 1000L)
     fun executeSimpleJob() {
-        jobLauncher.run(simpleJob, JobParameters(mapOf("requestDate" to JobParameter("12345678", String::class.java))))
+        jobLauncher.run(simpleTaskletJob, JobParameters(mapOf("requestDate" to JobParameter("12345678", String::class.java))))
     }
 }
 
