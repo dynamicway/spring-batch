@@ -1,6 +1,7 @@
 package me.study.simple_batch.scheduler
 
 import org.springframework.batch.core.Job
+import org.springframework.batch.core.JobParameter
 import org.springframework.batch.core.JobParameters
 import org.springframework.batch.core.launch.JobLauncher
 import org.springframework.scheduling.annotation.Scheduled
@@ -13,7 +14,7 @@ class SimpleScheduler(
 ) {
     @Scheduled(fixedDelay = 5 * 1000L)
     fun executeSimpleJob() {
-        jobLauncher.run(simpleJob, JobParameters())
+        jobLauncher.run(simpleJob, JobParameters(mapOf("requestDate" to JobParameter("12345678", String::class.java))))
     }
 }
 
