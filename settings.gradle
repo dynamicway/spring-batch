@@ -1,3 +1,3 @@
 rootProject.name = 'spring-batch'
 
-include 'simple-batch'
+include 'simple-batch', 'late-binding-job-and-step-attributes'
