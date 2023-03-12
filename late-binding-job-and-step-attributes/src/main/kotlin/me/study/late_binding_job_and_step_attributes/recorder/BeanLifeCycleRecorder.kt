@@ -3,20 +3,21 @@ package me.study.late_binding_job_and_step_attributes.recorder
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
-import kotlin.reflect.KClass
 
 @Component
 class BeanLifeCycleRecorder {
     private val index = AtomicLong()
-    private val records = mutableMapOf<KClass<*>, ConcurrentHashMap<Long, BeanLifeCycle>>()
+    private val records = mutableMapOf<String, ConcurrentHashMap<Long, BeanLifeCycle>>()
 
-    fun record(kClass: KClass<*>, currentLifeCycle: BeanLifeCycle) = records.computeIfAbsent(kClass) { _ ->
-        val records = ConcurrentHashMap<Long, BeanLifeCycle>()
-        records[index.getAndIncrement()] = currentLifeCycle
-        records
+    fun record(name: String, currentLifeCycle: BeanLifeCycle) {
+        val record = records[name]
+        if (record == null)
+            records[name] = ConcurrentHashMap<Long, BeanLifeCycle>()
+                .also { it[index.getAndIncrement()] = currentLifeCycle }
+        else record[index.getAndIncrement()] = currentLifeCycle
     }
 
-    fun getRecords(kClass: KClass<*>) =
-        records[kClass] ?: throw IllegalStateException("Cannot found record. record: $kClass")
+    fun getRecords(name: String) =
+        records[name] ?: throw IllegalStateException("Cannot found record. record: $name")
 
 }
